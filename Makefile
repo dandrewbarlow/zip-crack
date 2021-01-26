@@ -5,6 +5,11 @@ OBJECTS = $(SOURCES:.cpp=.o)
 EXEC=crack
 
 go:
+	@echo "fetch dependencies"
+	go get github.com/jessevdk/go-flags
+	go get github.com/yeka/zip
+	@echo ""
+	@echo "compile"
 	go build crack.go
 
 test:

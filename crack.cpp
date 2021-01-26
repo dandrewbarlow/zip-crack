@@ -133,11 +133,13 @@ int openZip(zip_t * file, struct zip_stat stat, zip_flags_t flags, string passwo
     zip_file_t * attempt;
     attempt = zip_fopen_encrypted( file, targetFile.c_str(), flags, password.c_str() );
 
-    // check if the password worked
-    // currently generating a LOT of false positives, so better solution required
-    // libzip maintainer maintains this is a flaw of the the file standard itself however, so not much I can do without some blue sky solutioneering
-    // UPDATE changed to checking for "No error" string, now I get no positives, even for the correct password. fuck this shit
+    /*
+    currently generating a LOT of false positives, so better solution required
+    libzip maintainer maintains this is a flaw of the the file standard itself however, so not much I can do without some blue sky solutioneering
+    UPDATE changed to checking for "No error" string, now I get no positives, even for the correct password. fuck this shit
+    */
 
+    // check if the password worked
     // libzip error codes:
     // ZIP_ER_OK : "No error" 
     // ZIP_ER_WRONGPASSWD : 0x7f84c0d00180 : "Wrong password provided"

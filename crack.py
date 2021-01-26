@@ -3,7 +3,7 @@ import zipfile
 import sys
 from tqdm import tqdm
 
-charlist = 'abcdefghijklmnopqrstuvwxyz'
+charlist = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 complete = []
 
 
@@ -31,10 +31,10 @@ else:
     target = "secret.txt"
 
 # silent
-if '-s' not in sys.argv:
-    silent = False
-else:
+if '-s' in sys.argv:
     silent = True
+else:
+    silent = False
 
 
 # EXECUTION ================================================================

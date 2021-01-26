@@ -4,7 +4,7 @@
 please don't use this for malicious purposes. This is a learning excersize. Zip encryption sucks anyway, and there are better tools out there. just leave me out of it
 
 ### Description
-I was messing around on youtube and found a vid about brute forcing password protected .zip files. I can't find it now, but it was made by [NeuralNine](https://www.youtube.com/channel/UC8wZnXYK_CGKlBcZp-GxYPA). Thought it'd be fun to implement his version python and try out some different languages to compare and contrast the experience. The essential idea is generating a list of string permutations up to a given length (values above 4 become very computationally expensive), then try to open an encrypted .zip file using each of these permutations, finishing when a match is found. I included the very discreet `secret.txt.zip` to make this repo slightly more irresistable.
+I was messing around on youtube and found a vid about brute forcing password protected .zip files. I can't find it now, but it was made by [NeuralNine](https://www.youtube.com/channel/UC8wZnXYK_CGKlBcZp-GxYPA). Thought it'd be fun to implement his python version and try out some different languages to compare and contrast the experience. The essential idea is generating a list of string permutations up to a given length (values above 4 become very computationally expensive), then try to open an encrypted .zip file using each of these permutations, finishing when a match is found. I included the very discreet `secret.txt.zip` to make this repo slightly more irresistable.
 
 ### Tests
 Just for fun, I put a `make test` in which times the go version and the python version. (*spoiler alert*) Go wins

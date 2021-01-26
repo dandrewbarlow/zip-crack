@@ -77,4 +77,4 @@ for password in complete:
     except:
         pass
     
-exit(0);
+exit(0)

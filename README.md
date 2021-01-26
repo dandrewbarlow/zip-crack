@@ -27,4 +27,4 @@ Application Options:
 ```
 
 ### C++ - `crack.cpp`
-I certainly tried pretty hard to make a version in c++, but libzip gave me enough trouble that I'm putting that on an indefinite backburner. In my defense the library produces many false positives, and their documentation basically says thats the way it is, so I think that one's outside my purview. I'm leaving it here for educational purposes, however.
+I certainly tried pretty hard to make a version in c++, but libzip gave me enough trouble that I'm putting that on an indefinite backburner. In my defense the library produces many false positives, and their documentation basically says thats the way it is, so I think that one's outside my purview. I'm leaving it here for educational purposes, however. Switching to go and writing a working program in hours after fiddling with this for an god knows how long really made clear to me why I don't do more work in c++ (or maybe why I've heard so many good things about go)

@@ -1,5 +1,6 @@
 # Zip Crack by [Andrew Barlow](https://github.com/dandrewbarlow)
 
+### Disclaimer
 please don't use this for malicious purposes. This is a learning excersize. Zip encryption sucks anyway, and there are better tools out there. just leave me out of it
 
 ### Description

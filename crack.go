@@ -21,8 +21,8 @@ var valueList []string
 // options struct for go-flags library
 type options struct {
 	K       int      `short:"k" long:"permutations" description:"Length of permutations" default:"4"`
-	Lists   []string `short:"l" long:"lists" description:"Provide password lists to check. Option bypasses permutation generation)"`
-	X       string   `short:"x" long:"extract" description:"Extract permutation list (- for stdout). Option bypasses bruteforcing"`
+	Lists   []string `short:"l" long:"lists" description:"Provide password lists to check. Option bypasses permutation generation"`
+	X       bool     `short:"x" long:"extract" description:"Extract permutation list to stdout."`
 	ZipFile string   `short:"f" long:"file" description:"Provide encrypted zip filepath"`
 	Help    bool     `short:"h" long:"help" description:"Show help menu"`
 }
@@ -38,8 +38,12 @@ func parseOptions() (options, error) {
 		os.Exit(1)
 	}
 
-	if opts.ZipFile == "" {
-		fmt.Println("error : no zip file specified")
+	if opts.X {
+
+	}
+
+	if opts.ZipFile == "" && opts.X == false && !opts.Help {
+		fmt.Println("Error : not enough parameters provided")
 		p.WriteHelp(os.Stdout)
 		os.Exit(1)
 	}
@@ -65,7 +69,6 @@ func parseLists(paths []string) error {
 		scanner := bufio.NewScanner(file)
 
 		for scanner.Scan() {
-			fmt.Printf("%v\n", scanner.Text())
 			valueList = append(valueList, scanner.Text())
 		}
 		if scanner.Err() != nil {
@@ -78,22 +81,28 @@ func parseLists(paths []string) error {
 // credit to https://www.geeksforgeeks.org/print-all-combinations-of-given-length/
 // modified, but only a lil
 // Gets all permutations of K length of a list w/ length n; prefix is for recursive implementation, empty on start
-func getKPermutations(list string, prefix string, k int) {
+func getKPermutations(list string, prefix string, k int, x bool) {
 	if k == 0 {
-		valueList = append(valueList, prefix)
+		// x = xtract no need to waste all that memory, just write to stdout
+		if x {
+			fmt.Printf("%v\n", prefix)
+		} else {
+			valueList = append(valueList, prefix)
+		}
 		return
+
 	}
 
 	for _, i := range list {
 
 		newPrefix := prefix + string(i)
-		getKPermutations(list, newPrefix, k-1)
+		getKPermutations(list, newPrefix, k-1, x)
 	}
 
 }
 
 // get permutations of all lengths up to k
-func getAllPermutations(len int) {
+func getAllPermutations(len int, x bool) {
 	/*
 		to clarify why I'm seperating this from the getKPermutations function:
 		getKPermutations returns all permutations strictly of length K
@@ -102,7 +111,7 @@ func getAllPermutations(len int) {
 		perhaps possible put in one function, but this is simpler tbh (unless I'm missing something obvious)
 	*/
 	for i := 0; i <= len; i++ {
-		getKPermutations(characters, "", i)
+		getKPermutations(characters, "", i, x)
 	}
 }
 
@@ -159,37 +168,12 @@ func main() {
 	opts, err := parseOptions()
 
 	if len(opts.Lists) == 0 {
-		getAllPermutations(opts.K)
+		getAllPermutations(opts.K, opts.X)
 	} else {
 		err := parseLists(opts.Lists)
 		if err != nil {
 			fmt.Printf("%v\n", err)
 		}
-	}
-
-	switch {
-	case opts.X == "-":
-		for _, p := range valueList {
-			fmt.Fprintf(os.Stdout, "%v\n", p)
-		}
-		return
-
-	case opts.X != "":
-		file, err := os.Create(opts.X)
-
-		defer file.Close()
-
-		if err != nil {
-			fmt.Printf("%v\n", err)
-			return
-		}
-
-		for _, p := range valueList {
-			fmt.Fprintf(file, "%v\n", p)
-		}
-
-	default:
-
 	}
 
 	password, err := bruteForce(valueList, opts.ZipFile)

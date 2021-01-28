@@ -176,6 +176,11 @@ func main() {
 		}
 	}
 
+	// xtraction does'nt try to bruteForce
+	if opts.X {
+		return
+	}
+
 	password, err := bruteForce(valueList, opts.ZipFile)
 
 	if err != nil {

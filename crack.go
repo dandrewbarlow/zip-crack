@@ -38,10 +38,6 @@ func parseOptions() (options, error) {
 		os.Exit(1)
 	}
 
-	if opts.X {
-
-	}
-
 	if opts.ZipFile == "" && opts.X == false && !opts.Help {
 		fmt.Println("Error : not enough parameters provided")
 		p.WriteHelp(os.Stdout)
